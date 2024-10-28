@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html>
+<head>
+   <title>To-Do List</title>
+   <style>
+      /* Basic styling */
+      body { font-family: Arial, sans-serif; margin: 20px; }
+      #todo-list { list-style-type: none; padding: 0; }
+      #todo-list li { padding: 10px; display: flex; align-items: center; justify-content: space-between; }
+      .done { text-decoration: line-through; color: gray; }
+      button { margin-left: 5px; }
+   </style>
+</head>
+<body>
+   <h2>To-Do List</h2>
+   <input type="text" id="task-input" placeholder="Add a new task">
+   <button onclick="addTask()">+</button>
+
+   <ul id="todo-list"></ul>
+
+   <script>
+      // Function to add a new task
+      function addTask() {
+         const taskInput = document.getElementById('task-input');
+         const taskText = taskInput.value.trim();
+         
+         if (taskText === '') {
+            alert("Please enter a task.");
+            return;
+         }
+
+         // Create list item for the new task
+         const li = document.createElement('li');
+
+         // Task text span
+         const taskSpan = document.createElement('span');
+         taskSpan.textContent = taskText;
+         taskSpan.onclick = () => toggleDone(taskSpan); // Mark as done on click
+         li.appendChild(taskSpan);
+
+         // Edit button
+         const editButton = document.createElement('button');
+         editButton.textContent = '✏️';
+         editButton.onclick = () => editTask(taskSpan);
+         li.appendChild(editButton);
+
+         // Delete button
+         const deleteButton = document.createElement('button');
+         deleteButton.textContent = '🗑️';
+         deleteButton.onclick = () => li.remove(); // Remove the task from the list
+         li.appendChild(deleteButton);
+
+         // Append the new task to the list
+         document.getElementById('todo-list').appendChild(li);
+
+         // Clear the input field
+         taskInput.value = '';
+      }
+
+      // Function to mark task as done
+      function toggleDone(taskSpan) {
+         taskSpan.classList.toggle('done');
+      }
+
+      // Function to edit a task
+      function editTask(taskSpan) {
+         const newTaskText = prompt("Edit your task:", taskSpan.textContent);
+         if (newTaskText !== null) {
+            taskSpan.textContent = newTaskText.trim() ? newTaskText : taskSpan.textContent;
+         }
+      }
+   </script>
+</body>
+</html>

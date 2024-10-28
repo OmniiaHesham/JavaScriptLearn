@@ -8,4 +8,4 @@ class Car{
   }
   
   mycar = new Car("Toyota");
-  console.log(mycar.make());
+  console.log(mycard.make());
